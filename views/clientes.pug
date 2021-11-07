@@ -1,0 +1,87 @@
+extends base.pug
+
+block title 
+block css 
+    link(rel="stylesheet", href="/css/form.css")
+    link(rel="stylesheet", href="/css/header.css")
+block container 
+    header.header   
+        h1 
+            i Clientes
+        section.container-links  
+            a#url-clientes(href="/") Clientes 
+            a#url-municipios(href="/municipio") Municipios  
+    //h3 Clientes 
+    .col-md-5.cont
+        .abs-center 
+            h2 Formulario Clientes
+            if cliente
+                form.formu(action="/actualizar/" + cliente[0].idCliente, method="post")
+                    .mb-3 
+                        label.form-label(for="nombre") Nombre 
+                        input.form-control(type="text" name="nombre" value=cliente[0].nombre)
+                    .mb-3 
+                        label.form-label(for="apellido") Apellido
+                        input.form-control(type="text" name="apellido" value=cliente[0].apellido)
+                    .mb-3 
+                        label.form-label(for="telefono") Telefono
+                        input.form-control(type="text" name="telefono" value=cliente[0].telefono)
+                    .mb-3 
+                        label.form-label(for="email") Email
+                        input.form-control(type="email" name="email" value=cliente[0].email)
+                    .mb-3 
+                        label.form-label(for="idMunicipio") Municipio
+                        select.form-select(name="idMunicipio")
+                            each cli in tableclientes
+                                option(value=cli.idMunicipio) #{cli.Municipio}
+                    .mb-3 
+                       
+                        button.btn.btn-success Guardar 
+            else 
+                form.formu(action="", method="post")
+                    .mb-3 
+                        label.form-label(for="nombre") Nombre 
+                        input.form-control(type="text" name="nombre")
+                    .mb-3 
+                        label.form-label(for="apellido") Apellido
+                        input.form-control(type="text" name="apellido")
+                    .mb-3 
+                        label.form-label(for="telefono") Telefono
+                        input.form-control(type="text" name="telefono")
+                    .mb-3 
+                        label.form-label(for="email") Email 
+                        input.form-control(type="email" name="email")
+                    .mb-3 
+                        label.form-label(for="idMunicipio") Municipio
+                        select.form-select(name="idMunicipio")
+                            each cli in tableclientes
+                                option(value=cli.idMunicipio) #{cli.municipio}
+                    .mb-3 
+                        button.btn.btn-success Guardar
+                        button.btn.btn-warning Eliminar
+
+    br
+    h3  Mostrar Datos
+    .col-md-5.cont  
+        table.table.table-striped.table-hover
+            thead 
+                tr 
+                    th(scope='col') Nombre 
+                    th(scope='col') Apellido 
+                    th(scope='col') Telefono 
+                    th(scope='col') Email 
+                    th(scope='col') Municipio
+                    th(scope='col') Opciones
+            tbody 
+                each cli in tableclientes
+                    tr 
+                        td(scope='row') #{cli.nombre}
+                        td #{cli.apellido}
+                        td #{cli.telefono}
+                        td #{cli.email}
+                        td #{cli.municipio}
+                        td 
+                            a(href="/actualizar/" + cli.idcliente) Update
+                            a(href="/borrar/" + cli.idcliente) Delete
+
+

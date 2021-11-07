@@ -1,0 +1,66 @@
+extends base.pug
+
+block title 
+block css 
+    link(rel="stylesheet", href="/css/form.css")
+    link(rel="stylesheet", href="/css/header.css")
+block container 
+    header.header   
+        h1 
+            i Clientes
+        section.container-links  
+            a#url-clientes(href="/") Clientes 
+            a#url-municipios(href="/municipio") Municipios  
+    //h3 Clientes 
+    .col-md-5.cont
+        .abs-center 
+            h3 Formulario Municipios
+            if municipio
+                form.formu(action="/municipio/actualizar/" + municipio[0].id, method="post")
+                    .mb-3 
+                        label.form-label(for="municipio") Municipio 
+                        input.form-control(type="text" name="municipio" value=municipio[0].municipio)
+                    .mb-3 
+                        label.form-label(for="abreviatura") Abreviatura
+                        input.form-control(type="text" name="abreviatura" value=municipio[0].abreviatura)
+                    .mb-3 
+                        label.form-label(for="departamento") Telefono
+                        input.form-control(type="text" name="departamento" value=municipio[0].departamento)
+                    .mb-3 
+                        button.btn.btn-warning Eliminar
+                        button.btn.btn-success Guardar 
+            else 
+                form.formu(action="/municipio", method="post")
+                    .mb-3 
+                        label.form-label(for="municipio") Municipio 
+                        input.form-control(type="text" name="municipio")
+                    .mb-3 
+                        label.form-label(for="abreviatura") Abreviatura
+                        input.form-control(type="text" name="abreviatura")
+                    .mb-3 
+                        label.form-label(for="departamento") Departamento
+                        input.form-control(type="text" name="departamento")
+                    
+                    .mb-3 
+                        button.btn.btn-success Guardar
+                        button.btn.btn-warning Eliminar
+
+    br
+    h3  Mostrar Datos
+    .col-md-5.cont  
+        table.table.table-striped.table-hover
+            thead 
+                tr 
+                    th(scope='col') Municipio 
+                    th(scope='col') Abreviatura
+                    th(scope='col') Departamento 
+                    th(scope='col') Opciones
+            tbody 
+                each m in municipios
+                    tr 
+                        td(scope='row') #{m.municipio}
+                        td #{m.abreviatura}
+                        td #{m.departamento}
+                        td 
+                            a#edit(href="/municipio/actualizar/" + m.id) Update
+                            a#delete(href="/municipio/borrar/" + m.id) Delete
